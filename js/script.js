@@ -1,3 +1,4 @@
+/* eslint-disable arrow-parens */
 'use strict';
 
 class Todo {
@@ -23,22 +24,15 @@ class Todo {
 
     createItem(todo) {
         const li = document.createElement('li');
-        const removeBtn = document.createElement('button');
-        const completeBtn = document.createElement('button');
-
         li.classList.add('todo-item');
-        removeBtn.classList.add('todo-remove');
-        completeBtn.classList.add('todo-complete');
-
         li.key = todo.key;
-        removeBtn.key = todo.key;
-        completeBtn.key = todo.key;
 
         li.insertAdjacentHTML('beforeend', `
         <span class="text-todo">${todo.value}</span>
         <div class="todo-buttons">
-        <button class="todo-remove"></button>
-		<button class="todo-complete"></button>
+        <!-- <button class="todo-edit"></button> -->
+            <button class="todo-remove"></button>
+            <button class="todo-complete"></button>
         </div>
         `);
 
@@ -56,9 +50,6 @@ class Todo {
                 value: this.input.value,
                 complited: false,
                 key: this.generateKey(),
-                configurable: true, // запретить удаление "delete user.name"
-                writable: true,
-                enumerable: true,
             };
             this.todoData.set(newTodo.key, newTodo);
             this.render();
@@ -79,14 +70,9 @@ class Todo {
 
     deleteItem(e) {
         const itemKey = this.findKey(e);
-        this.todoData.forEach((e, i, arr) => {
+        this.todoData.forEach((e, i) => {
             if (itemKey === i) {
-
-              e = null;
-                // console.log('arr: ', arr);
-                // console.log('arr: ', i);
-                // console.log('e: ', e);
-                // console.log('this.todoData: ', this.todoData);
+                this.todoData.delete(itemKey);
             }
         });
         this.render();
@@ -102,7 +88,31 @@ class Todo {
         this.render();
     }
 
-    // redactItem(){}
+    // redactItem(e) {
+    //     setInterval(() => console.log('222'), 800);
+    //     document.removeEventListener('click', this.redactItem);
+    //     e.path.forEach((e) => {
+    //         const redactToDo = (e) => {
+    //             if (e.target.className === 'todo-edit') {
+    //                 console.log('ky');
+    //             }
+    //         };
+
+    //         if (e.className === 'todo-item') {
+    //             e.setAttribute('contenteditable', true);
+    //             const value = e.querySelector('span');
+    //             e.style.background = '#82c0f2';
+    //             e.style.border = '#4682B4 solid 1px';
+
+    //             // value.textContent
+    //             // console.log('value.textContent: ', value.textContent);
+
+    //             document.addEventListener('click', e => redactToDo(e));
+    //         }
+    //     });
+
+
+    // }
 
     handler() {
         document.addEventListener('click', e => {
@@ -112,6 +122,9 @@ class Todo {
             if (e.target.className === 'todo-remove') {
                 this.deleteItem(e);
             }
+            // if (e.target.className === 'todo-edit') {
+            //     this.redactItem(e);
+            // }
         });
 
         // делегирование обработчик событий
@@ -124,6 +137,6 @@ class Todo {
     }
 }
 
-const todo = new Todo('.todo-control', '.header-input', '.todo-list', '.todo-completed', '.todo-complete');
+const todo = new Todo('.todo-control', '.header-input', '.todo-list', '.todo-completed');
 
 todo.init();
