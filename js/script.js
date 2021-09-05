@@ -100,18 +100,18 @@ class Todo {
             const interval = setInterval(() => {
                 if (position1 < screenWidth) {
                     parentLi.style.cssText = `
-                background: #b7f7c1;
-                position: relative;
-                left: ${position1}px;
-                overflow: hidden;`;
+                    background: #b7f7c1;
+                    position: relative;
+                    left: ${position1}px;
+                    overflow: hidden;`;
                     position1 += 15;
                 } else if (position1 > screenWidth) {
                     appendParent.append(parentLi);
                     parentLi.style.cssText = `
-                background: #b7f7c1;
-                position: relative;
-                left: ${position2}px;
-                overflow: hidden;`;
+                    background: #b7f7c1;
+                    position: relative;
+                    left: ${position2}px;
+                    overflow: hidden;`;
                     position2 -= 15;
                     if (position2 <= -5) {
                         parentLi.style.cssText = `
