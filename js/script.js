@@ -7,7 +7,7 @@ class Todo {
         this.todoCompleted = document.querySelector(todoCompleted);
         this.todoData = new Map(JSON.parse(localStorage.getItem('toDoList')));
     }
-    // отправка новых данных в сторадж
+    // отправка данных в Storage
     addToStorage() {
         localStorage.setItem('toDoList', JSON.stringify([...this.todoData]));
     }
@@ -55,7 +55,7 @@ class Todo {
             alert('Введите задачу, затем нажмите добавить!')
         );
     }
-    // генерация кляча события
+    // создание ключа события
     generateKey() {
         return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
     }
@@ -71,7 +71,7 @@ class Todo {
         let opacity = 1;
         const interval = setInterval(() => {
             parentLi.style.cssText = `
-            background: #f9b8b8;
+            background: red;
             opacity: ${opacity};
             overflow: hidden;`;
             opacity -= 0.01;
@@ -99,7 +99,7 @@ class Todo {
             const interval = setInterval(() => {
                 if (position1 < screenWidth) {
                     parentLi.style.cssText = `
-                background: #b7f7c1;
+                background: lightblue;
                 position: relative;
                 left: ${position1}px;
                 overflow: hidden;`;
@@ -107,14 +107,14 @@ class Todo {
                 } else if (position1 > screenWidth) {
                     appendParent.append(parentLi);
                     parentLi.style.cssText = `
-                background: #b7f7c1;
+                background: lightblue;
                 position: relative;
                 left: ${position2}px;
                 overflow: hidden;`;
                     position2 -= 15;
                     if (position2 <= -5) {
                         parentLi.style.cssText = `
-                    background: #fff;
+                    background: white;
                     position: relative  ;`;
                         clearInterval(interval);
                     }
@@ -156,8 +156,8 @@ class Todo {
         };
         if (!parent.style.background) {
             parent.setAttribute('contenteditable', true);
-            parent.style.background = '#82c0f2';
-            parent.style.border = '#4682B4 solid 1px';
+            parent.style.background = 'steelblue';
+            parent.style.border = 'black solid 2px';
         } else {
             sendChangedToDo();
         }
@@ -171,7 +171,8 @@ class Todo {
     }
     // делегирование обработчик событий
     handler() {
-        document.addEventListener('click', e => {
+        const body = document.getElementsByTagName('body')[0];
+        body.addEventListener('click', e => {
             if (e.target.className === 'todo-complete') {
                 this.completedItem(e);
             }
@@ -184,7 +185,7 @@ class Todo {
         });
 
     }
-    // инициализация при загрузке
+    // вывод дел при загрузке страницы
     init() {
         this.form.addEventListener('submit', this.addTodo.bind(this));
         this.render();
@@ -195,4 +196,3 @@ class Todo {
 const todo = new Todo('.todo-control', '.header-input', '.todo-list', '.todo-completed');
 
 todo.init();
-
