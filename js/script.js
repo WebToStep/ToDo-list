@@ -68,6 +68,7 @@ class Todo {
     // удалить todo
     deleteItem(e) {
         const parentLi = e.target.parentNode.parentNode;
+        e.target.setAttribute("disabled", true);
         let opacity = 1;
         const interval = setInterval(() => {
             parentLi.style.cssText = `
